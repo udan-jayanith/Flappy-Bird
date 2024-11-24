@@ -3,8 +3,7 @@ const ctx = canvas.getContext('2d')
 
 let gameLoadingStates = []
 // Scroll to 500px horizontally
-window.scrollTo({ left: 0, behavior: 'smooth' });
-
+window.scrollTo({left: 0, behavior: 'smooth'})
 
 /*
 // Get the HTML element you want to make full screen
@@ -26,7 +25,6 @@ function makeFullScreen() {
 // Call the function
 makeFullScreen();
 */
-
 
 // #region Background
 class Background {
@@ -108,6 +106,10 @@ class Ground {
 			if (this.dx[i] < -this.imgWidth) this.dx[i] = this.imgWidth
 		}
 	}
+
+	collisionDetection() {
+		return
+	}
 }
 // #endregion
 
@@ -177,6 +179,10 @@ class Pipes {
 				this.properties[i].randomNumber = Math.floor(Math.random() * 401) - 200
 			}
 		}
+	}
+
+	collisionDetection() {
+		return
 	}
 }
 // #endregion
@@ -254,4 +260,3 @@ setInterval(() => {
 	if (gameLoadingStates.length >= 2) draw()
 	else console.log(gameLoadingStates)
 }, settings.getIntervalTimeout())
-
