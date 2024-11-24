@@ -1,0 +1,18 @@
+body {
+	margin: 0%;
+	padding: 0%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: black;
+	overflow: hidden;
+}
+
+#canvas {
+	background-image: url('../images/backdrop.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: 100vh;
+}
