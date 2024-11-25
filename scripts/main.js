@@ -53,10 +53,26 @@ settings.setFPS(60)
 settings.setGameSpeed(20)
 bird.setBirdFPS(settings.getFPS())
 
+onkeyup = (event) => {
+	if (
+		event.code == 'Space' ||
+		event.code == 'KeyW' ||
+		event.code == 'ArrowUp'
+	) {
+		bird.jump()
+	}
+}
+
+const screen = document.querySelector('.overlay')
+
+screen.addEventListener('click', () => {
+    bird.jump()
+     console.log('Click')
+})
 
 function draw() {
-    ctx.clearRect(-canvas.width, 0, canvas.width * 3, canvas.height)
-    
+	ctx.clearRect(-canvas.width, 0, canvas.width * 3, canvas.height)
+
 	background.draw(settings.getGameSpeed())
 	pipes.draw(settings.getGameSpeed())
 	bird.draw(bird.updateBirdActions())
@@ -75,4 +91,3 @@ setInterval(() => {
 	if (gameLoadingStates.length >= 2) draw()
 	else console.log(gameLoadingStates)
 }, settings.getIntervalTimeout())
-

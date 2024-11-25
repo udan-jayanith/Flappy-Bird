@@ -213,9 +213,14 @@ class Bird {
 	updateBirdActions() {
 		if (this.skyLevel == null) this.skyLevel = canvas.height / 2
 		if (this.eventTrigger > 0) {
-			this.eventTrigger -= this.birdSpeed
-			this.skyLevel += this.birdGravity
-		} else this.skyLevel -= this.birdGravity
+			this.eventTrigger -= this.birdSpeed + 0.0533333333
+			this.skyLevel +=
+				this.birdGravity -
+				(canvas.height / 2 - this.skyLevel / (canvas.height / 2)) / 1000 //0.0533333333
+		} else {
+			this.skyLevel -=
+				(canvas.height / 2 - this.skyLevel / (canvas.height / 2)) / 60
+		}
 		this.frame += this.birdSpeed
 
 		if (this.frame <= 10) return this.img1
@@ -228,7 +233,7 @@ class Bird {
 
 	setBirdFPS(fps) {
 		this.birdSpeed = 0.0333333333 * fps
-		this.birdGravity = 0.0433333333 * fps
+		this.birdGravity = 0.0766666667 * fps * 2
 	}
 
 	setSkyLevel(h) {
@@ -236,7 +241,8 @@ class Bird {
 	}
 
 	jump() {
-		this.eventTrigger = this.birdSpeed * 20
+		if (this.skyLevel + this.eventTrigger + this.birdSpeed * 20 >= canvas.height) return
+		this.eventTrigger = this.birdSpeed * 15
 	}
 }
 // #endregion
