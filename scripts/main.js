@@ -59,35 +59,57 @@ onkeyup = (event) => {
 		event.code == 'KeyW' ||
 		event.code == 'ArrowUp'
 	) {
+		if (!intervalId) startSetInterval()
 		bird.jump()
 	}
 }
 
 const screen = document.querySelector('.overlay')
 
-screen.addEventListener('click', () => {
-    bird.jump()
-     console.log('Click')
+screen.addEventListener('click', (e) => {
+	if (!intervalId && e.target.className == 'overlay') {
+		startSetInterval()
+	}
+
+	bird.jump()
 })
 
 function draw() {
 	ctx.clearRect(-canvas.width, 0, canvas.width * 3, canvas.height)
 
 	background.draw(settings.getGameSpeed())
-	pipes.draw(settings.getGameSpeed())
+	if (bird.isGameStarted) pipes.draw(settings.getGameSpeed())
+	bird.runGravity()
 	bird.draw(bird.updateBirdActions())
 	ground.draw(settings.getGameSpeed())
 
 	currentGameFPS.calculateFPS()
 }
 
-bird.jump()
+//bird.jump()
 
 setInterval(() => {
 	currentGameFPS.display()
 }, 1000)
 
-setInterval(() => {
-	if (gameLoadingStates.length >= 2) draw()
-	else console.log(gameLoadingStates)
-}, settings.getIntervalTimeout())
+let intervalId
+const pauseButton = document.querySelector('.pause-button')
+
+function startSetInterval() {
+	pauseButton.style.display = 'block'
+	intervalId = setInterval(() => {
+		if (gameLoadingStates.length >= 2) draw()
+		else console.log(gameLoadingStates)
+	}, settings.getIntervalTimeout())
+}
+startSetInterval()
+
+function stopSetInterval() {
+	clearInterval(intervalId)
+}
+
+pauseButton.addEventListener('click', () => {
+	pauseButton.style.display = 'none'
+	stopSetInterval()
+	intervalId = false
+})

@@ -194,6 +194,9 @@ class Bird {
 		this.skyLevel = null
 		this.eventTrigger = 0
 		this.birdGravity = 0
+		this.isGameStarted = false
+		this.freeMove = 20
+		this.freeMoveAction = true
 	}
 
 	draw(image) {
@@ -211,15 +214,15 @@ class Bird {
 	}
 
 	updateBirdActions() {
-		if (this.skyLevel == null) this.skyLevel = canvas.height / 2
-		if (this.eventTrigger > 0) {
-			this.eventTrigger -= this.birdSpeed + 0.0533333333
-			this.skyLevel +=
-				this.birdGravity -
-				(canvas.height / 2 - this.skyLevel / (canvas.height / 2)) / 1000 //0.0533333333
-		} else {
-			this.skyLevel -=
-				(canvas.height / 2 - this.skyLevel / (canvas.height / 2)) / 60
+		if (!this.isGameStarted) {
+			this.skyLevel = canvas.height / 2 + this.freeMove
+			if (!this.freeMoveAction) {
+				this.freeMove++
+				if (this.freeMove >= 20) this.freeMoveAction = true
+			} else {
+				this.freeMove--
+				if (this.freeMove <= 0) this.freeMoveAction = false
+			}
 		}
 		this.frame += this.birdSpeed
 
@@ -231,17 +234,35 @@ class Bird {
 		}
 	}
 
+	runGravity() {
+		if (this.skyLevel == null) this.skyLevel = canvas.height / 2
+		if (this.eventTrigger > 0) {
+			this.eventTrigger -= this.birdSpeed + 0.0533333333
+			this.skyLevel +=
+				this.birdGravity -
+				(canvas.height / 2 - this.skyLevel / (canvas.height / 2)) / 1000 //0.0533333333
+		} else {
+			this.skyLevel -=
+				(canvas.height / 2 - this.skyLevel / (canvas.height / 2)) / 60
+		}
+	}
+
 	setBirdFPS(fps) {
 		this.birdSpeed = 0.0333333333 * fps
 		this.birdGravity = 0.0766666667 * fps * 2
 	}
 
-	setSkyLevel(h) {
-		this.skyLevel = h
+	isGameStarted() {
+		return this.isGameStarted
 	}
 
 	jump() {
-		if (this.skyLevel + this.eventTrigger + this.birdSpeed * 20 >= canvas.height) return
+		if (!this.isGameStarted) this.isGameStarted = true
+		if (
+			this.skyLevel + this.eventTrigger + this.birdSpeed * 20 >=
+			canvas.height
+		)
+			return
 		this.eventTrigger = this.birdSpeed * 15
 	}
 }
