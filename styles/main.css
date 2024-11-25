@@ -1,3 +1,10 @@
+@font-face {
+	font-family: 'GAMERIA'; /* Name of the font */
+	src: url('../fonts/GAMERIA.ttf') format('truetype'); /* Fallback */
+	font-weight: normal; /* Optional: Define weight */
+	font-style: normal; /* Optional: Define style */
+}
+
 body {
 	margin: 0%;
 	padding: 0%;
@@ -8,6 +15,9 @@ body {
 	height: 100vh;
 	background-color: black;
 	overflow: hidden;
+	color: white;
+
+	font-family: 'GAMERIA';
 }
 
 #canvas {
@@ -15,4 +25,81 @@ body {
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 100vh;
+}
+
+.overlay {
+	position: absolute;
+	width: 200px;
+	height: 100vh;
+	z-index: 1;
+}
+
+header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	margin-top: 2px;
+	margin-left: auto;
+	margin-right: auto;
+
+	.div-a {
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+		flex-direction: column;
+		margin-right: auto;
+	}
+
+	.div-b {
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+		flex-direction: column;
+		margin-left: auto;
+	}
+
+	.header-div-a,
+	.header-div-b {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 20px;
+	}
+
+	.header-div-b{
+		font-size: 20px;
+	}
+
+	.div-a-button{
+		margin-bottom: 6px;
+	}
+}
+
+.icons {
+	width: 18px;
+	height: 18px;
+	transition: transform 0.3s ease;
+}
+
+span {
+	margin: 2px 4px;
+	transition: transform 0.3s ease;
+}
+
+button {
+	background-color: #e96a10;
+	margin: 4px 6px;
+	padding: 2px 4px;
+	border: 2.6px solid white;
+	box-shadow: -0.1px 1px 0px 3.4px #553000;
+
+	font-family: 'GAMERIA';
+	color: white;
+	text-shadow: -1px 2px 0px rgba(0, 0, 0, 0.15);
+	transition: transform 0.3s ease;
+}
+
+button:hover {
+	transform: scale(0.96);
 }
