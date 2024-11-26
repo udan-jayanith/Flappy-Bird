@@ -18,15 +18,26 @@
 		<link rel="stylesheet" href="styles/main.css" />
 	</head>
 	<body>
+		<div class="loading-screen">
+			<progress class="loading-bar" value="50" max="100"></progress>
+			<img
+				src="https://c4.wallpaperflare.com/wallpaper/838/630/344/flappy-bird-game-popular-news-wallpaper-preview.jpg" />
+		</div>
+
 		<canvas id="canvas"> </canvas>
 
 		<div class="overlay">
 			<header>
 				<div class="div-a">
-					<button class="header-div-a div-a-button pause-button" accesskey="s">
-						<img src="../images/pause.png" class="icons" />
-						<span>Pause</span>
-					</button>
+					<div class="div-a-button">
+						<button class="header-div-a pause-button c x" accesskey="s">
+							<img src="../images/pause.png" class="icons x" />
+						</button>
+						<button class="screen-mod c x">
+							<img src="../images/fullscreen.png" class="icons x" />
+						</button>
+					</div>
+
 					<div class="header-div-a">
 						<span>FPS</span> <span class="current-fps">62</span>
 					</div>
@@ -42,9 +53,24 @@
 				</div>
 			</header>
 
-			<p class="notice"></p>
+			<div class="notice-centering-div">
+				<p class="notice">Press "Space" to start the game.</p>
+			</div>
+
+			<dialog class="game-over">
+				<div class="point-div">
+					<div class="header-div-b">
+						<span class="best-score">0</span> <span>Best Score</span>
+					</div>
+					<div class="header-div-b">
+						<span class="score">0</span> <span>Score</span>
+					</div>
+				</div>
+
+				<button class="reset-game-button x">Ok</button>
+			</dialog>
 		</div>
-		
+
 		<script src="scripts/settings.js"></script>
 		<script src="scripts/sprites.js"></script>
 		<script src="scripts/main.js"></script>

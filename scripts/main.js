@@ -3,75 +3,37 @@ const ctx = canvas.getContext('2d')
 
 let gameLoadingStates = []
 
-/*
-// Get the HTML element you want to make full screen
-let element = document.documentElement; // This selects the entire page
+let background = new Background()
+let ground = new Ground()
+let pipes = new Pipes()
+let bird = new Bird()
 
-// Function to request full screen
-function makeFullScreen() {
-    if (element.requestFullscreen) {
-        element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) { // Firefox
-        element.mozRequestFullScreen();
-    } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
-        element.webkitRequestFullscreen();
-    } else if (element.msRequestFullscreen) { // IE/Edge
-        element.msRequestFullscreen();
-    }
-}
+let settings = new Settings()
+let currentGameFPS = new CurrentGameFPS()
 
-// Call the function
-makeFullScreen();
-
-
-function exitFullScreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) { // Firefox
-        document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) { // Chrome, Safari, and Opera
-        document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { // IE/Edge
-        document.msExitFullscreen();
-    }
-}
-
-// Call this function to exit fullscreen
-exitFullScreen();
-
-*/
-
-const background = new Background()
-const ground = new Ground()
-const pipes = new Pipes()
-const bird = new Bird()
-
-const settings = new Settings()
-const currentGameFPS = new CurrentGameFPS()
-
-settings.setFPS(60)
-settings.setGameSpeed(20)
-bird.setBirdFPS(settings.getFPS())
+let isGameOver = false
+let intervalId = undefined
+const overlay = document.querySelector('.overlay')
 
 onkeyup = (event) => {
 	if (
-		(!isGameOver && event.code == 'Space') ||
-		event.code == 'KeyW' ||
-		event.code == 'ArrowUp'
+		!isGameOver &&
+		(event.code == 'Space' || event.code == 'KeyW' || event.code == 'ArrowUp')
 	) {
 		if (!intervalId) startSetInterval()
 		bird.jump()
 	}
 }
 
-const screen = document.querySelector('.overlay')
-
-screen.addEventListener('click', (e) => {
-	if (!intervalId && e.target.classList.contains('overlay') && !isGameOver) {
+overlay.addEventListener('click', (e) => {
+	if (e.target.classList.contains('x')) return
+	if (
+		!intervalId &&
+		e.target.classList.contains('notice-centering-div') &&
+		!isGameOver
+	) {
 		startSetInterval()
-	}
-
-	bird.jump()
+	}else if (e.target.classList.contains('notice-centering-div')) bird.jump()
 })
 
 const notice = document.querySelector('.notice')
@@ -83,7 +45,7 @@ function draw() {
 	if (bird.isGameStarted) {
 		pipes.draw(settings.getGameSpeed())
 		notice.style.display = 'none'
-	} else notice.innerText = 'Press "Space" to start the game.'
+	}
 
 	if (
 		pipes.collisionDetection(
@@ -108,8 +70,6 @@ setInterval(() => {
 	currentGameFPS.display()
 }, 1000)
 
-let intervalId
-let isGameOver = false
 const pauseButton = document.querySelector('.pause-button')
 
 function startSetInterval() {
@@ -133,13 +93,60 @@ function pauseTheGame() {
 	notice.innerText = 'Press "Space" to resume the game.'
 }
 
+const gameOverDialog = document.querySelector('.game-over')
+
 function gameOver() {
 	isGameOver = true
 	pauseButton.style.display = 'none'
 	stopSetInterval()
-	intervalId = false
+
+	gameOverDialog.style.display = 'flex'
+	gameOverDialog.showModal()
 }
+
+gameOverDialog.addEventListener('keydown', (e) => {
+	e.preventDefault()
+	if (e.code == 'Enter') r()
+})
+
+document.querySelector('.reset-game-button').addEventListener('click', () => {
+	location.reload()
+	//r()
+})
 
 pauseButton.addEventListener('click', () => {
 	pauseTheGame()
 })
+
+function playAudio(audioFilePath) {
+	const audio = new Audio(audioFilePath)
+	audio.volume = 0.1
+	audio
+		.play()
+		.catch((error) =>
+			alert(
+				'No audio permission granted. Allow audio permission for better experience.'
+			)
+		)
+}
+
+/*
+function r() {
+	gameOverDialog.style.display = 'none'
+	gameOverDialog.close()
+	gameLoadingStates = []
+
+	background = new Background()
+	ground = new Ground()
+	pipes = new Pipes()
+	bird = new Bird()
+
+	settings = new Settings()
+	currentGameFPS = new CurrentGameFPS()
+
+	isGameOver = false
+	intervalId = undefined
+	stopSetInterval()
+	console.log('d')
+}
+*/

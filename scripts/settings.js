@@ -3,18 +3,7 @@ class Settings {
 	constructor() {
 		this.FPS = 60
 		this.IntervalTimeout = 1000 / this.FPS
-		this.gameSpeed = 0.0875
-		this.IntervalGameSpeed = this.gameSpeed * this.IntervalTimeout
-	}
-
-	setFPS(FPS) {
-		this.FPS = FPS
-		this.IntervalTimeout = 1000 / this.FPS
-		this.IntervalGameSpeed = this.gameSpeed * this.IntervalTimeout
-	}
-
-	setGameSpeed(gameSpeed) {
-		this.gameSpeed = gameSpeed / 100
+		this.gameSpeed = 0.2
 		this.IntervalGameSpeed = this.gameSpeed * this.IntervalTimeout
 	}
 
@@ -53,3 +42,33 @@ class CurrentGameFPS {
 	}
 }
 // #endregion
+
+// #region Point system
+class ScoringSystem {
+	constructor() {
+		this.bestScore = JSON.parse(localStorage.getItem('best-score')) || 0
+		this.currentScore = 0
+
+		this.bestScoreEl = document.querySelectorAll('.best-score')
+		this.bestScoreEl.forEach((el) => {
+			el.innerText = this.bestScore
+		})
+
+		this.scoreEl = document.querySelectorAll('.score')
+	}
+
+	newScore() {
+		this.currentScore++
+		this.scoreEl.forEach((el) => {
+			el.innerText = this.currentScore
+		})
+		if (this.currentScore >= this.bestScore) {
+			localStorage.setItem('best-score', JSON.stringify(this.currentScore))
+			this.bestScoreEl.forEach((el) => {
+				el.innerText = this.currentScore
+			})
+		}
+
+		playAudio('../sounds/point.ogg')
+	}
+}

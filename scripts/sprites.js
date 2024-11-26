@@ -83,7 +83,10 @@ class Ground {
 	}
 
 	collisionDetection(dy, birdHeight) {
-		if (dy + birdHeight > this.dy) return true
+		if (dy + birdHeight > this.dy) {
+			playAudio('../sounds/die.ogg')
+			return true
+		}
 	}
 }
 // #endregion
@@ -117,7 +120,8 @@ class Pipes {
 			gameLoadingStates.push('Loading Pipes....')
 		}
 
-		this.a = canvas.height + 380//396 
+		this.a = canvas.height + 400 //380
+		this.scoringSystem = new ScoringSystem()
 	}
 
 	draw(gameSpeed) {
@@ -152,6 +156,7 @@ class Pipes {
 				this.properties[i].dx =
 					canvas.width + (this.imgWidth + canvas.width / 4)
 				this.properties[i].randomNumber = Math.floor(Math.random() * 401) - 186
+				this.scoringSystem.newScore()
 			}
 		}
 	}
@@ -159,12 +164,15 @@ class Pipes {
 	collisionDetection(dx, dy, objectWidth, objectHeight) {
 		for (let i = 0; i < this.properties.length; i++) {
 			if (
-				this.properties[i].dx < dx + objectWidth-8 &&
+				this.properties[i].dx < dx + objectWidth - 8 &&
 				this.properties[i].dx + this.imgWidth > dx &&
-				(this.a - this.properties[i].randomNumber < dy + objectHeight-8 ||
-				this.imgHeight - this.a - this.properties[i].randomNumber > dy)
-			) return true
-		
+				(this.a - this.properties[i].randomNumber < dy + objectHeight - 8 ||
+					this.imgHeight - this.a - this.properties[i].randomNumber > dy)
+			) {
+				playAudio('../sounds/die.ogg')
+				return true
+			}
+				
 		}
 	}
 }
@@ -200,10 +208,10 @@ class Bird {
 		}
 
 		this.frame = 0
-		this.birdSpeed = 0
+		this.birdSpeed = 2
 		this.skyLevel = null
 		this.eventTrigger = 0
-		this.birdGravity = 0
+		this.birdGravity = 9.2
 		this.isGameStarted = false
 		this.freeMove = 20
 		this.freeMoveAction = true
@@ -260,11 +268,6 @@ class Bird {
 		}
 	}
 
-	setBirdFPS(fps) {
-		this.birdSpeed = 0.0333333333 * fps
-		this.birdGravity = 0.0766666667 * fps * 2
-	}
-
 	isGameStarted() {
 		return this.isGameStarted
 	}
@@ -277,6 +280,7 @@ class Bird {
 		)
 			return
 		this.eventTrigger = this.birdSpeed * 15
+		playAudio('../sounds/jump.ogg')
 	}
 
 	getDx() {
