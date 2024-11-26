@@ -55,6 +55,7 @@ class Ground {
 			this.imgHeight = this.img.naturalHeight
 
 			this.dx = []
+			this.dy = canvas.height - this.imgHeight
 			for (let i = 0; i < 2; i++) {
 				this.dx.push(this.imgWidth * i)
 			}
@@ -71,7 +72,7 @@ class Ground {
 				this.imgWidth,
 				this.imgHeight,
 				this.dx[i],
-				canvas.height - this.imgHeight,
+				this.dy,
 				this.imgWidth,
 				this.imgHeight
 			)
@@ -81,8 +82,8 @@ class Ground {
 		}
 	}
 
-	collisionDetection() {
-		return
+	collisionDetection(dy, birdHeight) {
+		if (dy + birdHeight > this.dy) return true
 	}
 }
 // #endregion
@@ -155,8 +156,16 @@ class Pipes {
 		}
 	}
 
-	collisionDetection() {
-		return
+	collisionDetection(dx, dy, objectWidth, objectHeight) {
+		for (let i = 0; i < this.properties.length; i++) {
+			if (
+				this.properties[i].dx < dx + objectWidth &&
+				this.properties[i].dx + this.imgWidth > dx &&
+				(this.a - this.properties[i].randomNumber < dy + objectHeight ||
+				this.imgHeight - this.a - this.properties[i].randomNumber > dy)
+			) return true
+		
+		}
 	}
 }
 // #endregion
@@ -177,6 +186,7 @@ class Bird {
 		this.img1.onload = () => {
 			this.imgWidth = this.img1.naturalWidth
 			this.imgHeight = this.img1.naturalHeight
+			this.dx = this.imgWidth * 4
 
 			gameLoadingStates.push('Loading Ground....')
 		}
@@ -197,17 +207,20 @@ class Bird {
 		this.isGameStarted = false
 		this.freeMove = 20
 		this.freeMoveAction = true
+
+		this.dy = 0
 	}
 
 	draw(image) {
+		this.dy = canvas.height - this.skyLevel
 		ctx.drawImage(
 			image,
 			0,
 			0,
 			this.imgWidth,
 			this.imgHeight,
-			this.imgWidth * 4,
-			canvas.height - this.skyLevel,
+			this.dx,
+			this.dy,
 			this.imgWidth,
 			this.imgHeight
 		)
@@ -264,6 +277,22 @@ class Bird {
 		)
 			return
 		this.eventTrigger = this.birdSpeed * 15
+	}
+
+	getDx() {
+		return this.dx
+	}
+
+	getDy() {
+		return this.dy
+	}
+
+	getBirdHeight() {
+		return this.imgHeight
+	}
+
+	getBirdWidth() {
+		return this.imgWidth
 	}
 }
 // #endregion
