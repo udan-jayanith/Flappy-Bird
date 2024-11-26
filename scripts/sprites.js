@@ -117,7 +117,7 @@ class Pipes {
 			gameLoadingStates.push('Loading Pipes....')
 		}
 
-		this.a = canvas.height + 396 //400
+		this.a = canvas.height + 380//396 
 	}
 
 	draw(gameSpeed) {
@@ -159,9 +159,9 @@ class Pipes {
 	collisionDetection(dx, dy, objectWidth, objectHeight) {
 		for (let i = 0; i < this.properties.length; i++) {
 			if (
-				this.properties[i].dx < dx + objectWidth &&
+				this.properties[i].dx < dx + objectWidth-8 &&
 				this.properties[i].dx + this.imgWidth > dx &&
-				(this.a - this.properties[i].randomNumber < dy + objectHeight ||
+				(this.a - this.properties[i].randomNumber < dy + objectHeight-8 ||
 				this.imgHeight - this.a - this.properties[i].randomNumber > dy)
 			) return true
 		

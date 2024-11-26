@@ -68,11 +68,11 @@ header {
 		font-size: 20px;
 	}
 
-	.header-div-b{
+	.header-div-b {
 		font-size: 20px;
 	}
 
-	.div-a-button{
+	.div-a-button {
 		margin-bottom: 6px;
 	}
 }
@@ -98,11 +98,18 @@ button {
 	font-family: 'GAMERIA';
 	color: white;
 	letter-spacing: 1.4px;
-	
+
 	text-shadow: -1px 2px 0px rgba(0, 0, 0, 0.15);
 	transition: transform 0.3s ease;
 }
 
 button:hover {
 	transform: scale(0.96);
+}
+
+.notice {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }

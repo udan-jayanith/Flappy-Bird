@@ -67,23 +67,39 @@ onkeyup = (event) => {
 const screen = document.querySelector('.overlay')
 
 screen.addEventListener('click', (e) => {
-	if (!intervalId && e.target.className == 'overlay' && !isGameOver) {
+	if (!intervalId && e.target.classList.contains('overlay') && !isGameOver) {
 		startSetInterval()
 	}
 
 	bird.jump()
 })
 
+const notice = document.querySelector('.notice')
+
 function draw() {
 	ctx.clearRect(-canvas.width, 0, canvas.width * 3, canvas.height)
 
 	background.draw(settings.getGameSpeed())
-	if (bird.isGameStarted) pipes.draw(settings.getGameSpeed())
-	if(pipes.collisionDetection(bird.getDx(), bird.getDy(), bird.getBirdWidth(), bird.getBirdHeight())) gameOver() 
+	if (bird.isGameStarted) {
+		pipes.draw(settings.getGameSpeed())
+		notice.style.display = 'none'
+	} else notice.innerText = 'Press "Space" to start the game.'
+
+	if (
+		pipes.collisionDetection(
+			bird.getDx(),
+			bird.getDy(),
+			bird.getBirdWidth(),
+			bird.getBirdHeight()
+		)
+	) {
+		gameOver()
+	}
+
 	bird.runGravity()
 	bird.draw(bird.updateBirdActions())
 	ground.draw(settings.getGameSpeed())
-	if (ground.collisionDetection(bird.getDy(), bird.getBirdHeight())) gameOver() 
+	if (ground.collisionDetection(bird.getDy(), bird.getBirdHeight())) gameOver()
 
 	currentGameFPS.calculateFPS()
 }
@@ -113,11 +129,15 @@ function pauseTheGame() {
 	pauseButton.style.display = 'none'
 	stopSetInterval()
 	intervalId = false
+	notice.style.display = 'block'
+	notice.innerText = 'Press "Space" to resume the game.'
 }
 
 function gameOver() {
 	isGameOver = true
-	pauseTheGame()
+	pauseButton.style.display = 'none'
+	stopSetInterval()
+	intervalId = false
 }
 
 pauseButton.addEventListener('click', () => {
