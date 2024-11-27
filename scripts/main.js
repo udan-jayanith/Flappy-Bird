@@ -176,6 +176,8 @@ screenMod.addEventListener('click', () => {
 const mod = document.querySelector('.m-mod')
 
 function screenModFun() {
+	return 0
+	/*
 	if (
 		document.documentElement.requestFullscreen &&
 		mod.src.split('/')[4] == 'fullscreen.png'
@@ -186,6 +188,7 @@ function screenModFun() {
 		document.exitFullscreen()
 		mod.src = '../images/fullscreen.png'
 	}
+	*/
 }
 
 window.addEventListener('resize', () => {
