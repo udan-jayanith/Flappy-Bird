@@ -1,6 +1,6 @@
 @font-face {
 	font-family: 'GAMERIA'; /* Name of the font */
-	src: url('../fonts/GAMERIA.ttf') format('truetype'); /* Fallback */
+	src: url('https://flappy-bird3.vercel.app/fonts/GAMERIA.ttf') format('truetype'); /* Fallback */
 	font-weight: normal; /* Optional: Define weight */
 	font-style: normal; /* Optional: Define style */
 }
@@ -23,7 +23,7 @@ body {
 }
 
 #canvas {
-	background-image: url('../images/backdrop.webp');
+	background-image: url('https://flappy-bird3.vercel.app/images/backdrop.webp');
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 100vh;

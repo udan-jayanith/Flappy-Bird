@@ -82,7 +82,7 @@ class ScoringSystem {
 			})
 		}
 
-		playAudio('../sounds/point.ogg')
+		playAudio('https://flappy-bird3.vercel.app/sounds/point.ogg')
 	}
 
 	reset() {

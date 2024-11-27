@@ -23,7 +23,10 @@ const loadingScreen = document.querySelector('.loading-screen')
 loadingScreen.style.display = 'block'
 
 onkeyup = (event) => {
-	if (event.code == 'KeyF') screenModFun()
+	if (event.code == 'KeyF') {
+		screenModFun()
+		return
+	}
 	if (loadingScreen.style.display == 'block') return
 	if (
 		!isGameOver &&
@@ -186,10 +189,10 @@ function screenModFun() {
 		mod.src.split('/')[4] == 'fullscreen.webp'
 	) {
 		document.documentElement.requestFullscreen()
-		mod.src = '../images/fullscreen-exit.webp'
+		mod.src = 'https://flappy-bird3.vercel.app/images/fullscreen-exit.webp'
 	} else if (document.exitFullscreen) {
 		document.exitFullscreen()
-		mod.src = '../images/fullscreen.webp'
+		mod.src = 'https://flappy-bird3.vercel.app/images/fullscreen.webp'
 	}
 }
 
@@ -198,3 +201,12 @@ window.addEventListener('resize', () => {
 		overlay.style.width = getComputedStyle(canvas).width
 	}, 1000)
 })
+
+function isElectron() {
+  return navigator.userAgent.includes('Electron');
+}
+
+// Show the button only if running in Electron
+if (isElectron()) {
+	screenMod.style.display = 'none'
+}

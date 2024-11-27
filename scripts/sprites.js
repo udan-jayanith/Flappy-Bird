@@ -2,7 +2,7 @@
 class Background {
 	constructor() {
 		this.img = new Image()
-		this.img.src = '../images/background.webp'
+		this.img.src = 'https://flappy-bird3.vercel.app/images/background.webp'
 		this.overlay = document.querySelector('.overlay')
 
 		// Wait until the image is loaded
@@ -48,7 +48,7 @@ class Background {
 class Ground {
 	constructor() {
 		this.img = new Image()
-		this.img.src = '../images/ground.webp'
+		this.img.src = 'https://flappy-bird3.vercel.app/images/ground.webp'
 		this.imgWidth = 1474 //this.img.naturalWidth
 		this.imgHeight = 128 //this.img.naturalHeight
 
@@ -90,7 +90,7 @@ class Ground {
 
 	collisionDetection(dy, birdHeight) {
 		if (dy + birdHeight > this.dy) {
-			playAudio('../sounds/die.ogg')
+			playAudio('https://flappy-bird3.vercel.app/sounds/die.ogg')
 			return true
 		}
 	}
@@ -101,10 +101,10 @@ class Ground {
 class Pipes {
 	constructor() {
 		this.imgUpward = new Image()
-		this.imgUpward.src = '../images/upward-Pipe.webp'
+		this.imgUpward.src = 'https://flappy-bird3.vercel.app/images/upward-Pipe.webp'
 
 		this.imgDownward = new Image()
-		this.imgDownward.src = '../images/downward-Pipe.webp'
+		this.imgDownward.src = 'https://flappy-bird3.vercel.app/images/downward-Pipe.webp'
 
 		this.imgWidth = 138//this.imgUpward.naturalWidth
 		this.imgHeight = 793//this.imgUpward.naturalHeight
@@ -175,7 +175,7 @@ class Pipes {
 				(this.a - this.properties[i].randomNumber < dy + objectHeight - 8 ||
 					this.imgHeight - this.a - this.properties[i].randomNumber > dy)
 			) {
-				playAudio('../sounds/die.ogg')
+				playAudio('https://flappy-bird3.vercel.app/sounds/die.ogg')
 				return true
 			}
 		}
@@ -199,13 +199,13 @@ class Pipes {
 class Bird {
 	constructor() {
 		this.img1 = new Image()
-		this.img1.src = '../images/bird1.webp'
+		this.img1.src = 'https://flappy-bird3.vercel.app/images/bird1.webp'
 
 		this.img2 = new Image()
-		this.img2.src = '../images/bird2.webp'
+		this.img2.src = 'https://flappy-bird3.vercel.app/images/bird2.webp'
 
 		this.img3 = new Image()
-		this.img3.src = '../images/bird3.webp'
+		this.img3.src = 'https://flappy-bird3.vercel.app/images/bird3.webp'
 
 		// Wait until the image is loaded
 		this.img1.onload = () => {
@@ -297,7 +297,7 @@ class Bird {
 		)
 			return
 		this.eventTrigger = this.birdSpeed * 15
-		playAudio('../sounds/jump.ogg')
+		playAudio('https://flappy-bird3.vercel.app/sounds/jump.ogg')
 	}
 
 	getDx() {

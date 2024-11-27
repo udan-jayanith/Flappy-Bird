@@ -1,0 +1,31 @@
+{
+	"name": "flappy-bird",
+	"version": "1.0.0",
+	"main": "index.js",
+	"scripts": {
+		"start": "electron .",
+		"build": "electron-builder --win"
+	},
+	"build": {
+		"icon": "favicon.ico",
+		"win": {
+			"target": "nsis",
+			"icon": "favicon.ico"
+		},
+		"files": [
+			"index.js",
+			"index.html",
+			"favicon.ico",
+			"scripts/**/*",
+			"styles/**/*"
+		]
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"electron": "^33.2.0",
+		"electron-builder": "^25.1.8"
+	}
+}
