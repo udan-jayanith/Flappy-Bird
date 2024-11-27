@@ -18,7 +18,10 @@ class Background {
 			for (let i = 0; i < 4; i++) {
 				this.dx.push(this.imgWidth * i)
 			}
-			gameLoadingStates.push('Loading Background....')
+			setTimeout(() => {
+				gameLoadingStates.push('Loading Background....')
+			}, 1000)
+			
 		}
 	}
 
