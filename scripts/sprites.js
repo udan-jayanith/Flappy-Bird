@@ -120,7 +120,7 @@ class Pipes {
 			gameLoadingStates.push('Loading Pipes....')
 		}
 
-		this.a = canvas.height + 72
+		this.a = canvas.height - 72
 		this.scoringSystem = new ScoringSystem()
 	}
 
