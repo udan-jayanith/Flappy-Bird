@@ -66,7 +66,7 @@ class ScoringSystem {
 
 			setTimeout(() => {
 				gameLoadingStates.push('Loading Settings....')
-			}, 100 - connection.downlink * 10)
+			}, 1000 - connection.downlink * 10)
 		}
 	}
 
