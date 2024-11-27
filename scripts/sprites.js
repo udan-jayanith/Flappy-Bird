@@ -2,18 +2,17 @@
 class Background {
 	constructor() {
 		this.img = new Image()
-		this.img.src = '../images/background.png'
+		this.img.src = '../images/background.webp'
 		this.overlay = document.querySelector('.overlay')
 
 		// Wait until the image is loaded
 		this.img.onload = () => {
-			this.imgWidth = this.img.naturalWidth
-			this.imgHeight = this.img.naturalHeight
+			this.imgWidth = 732 //this.img.naturalWidth
+			this.imgHeight = 896 //this.img.naturalHeight
 
 			canvas.width = this.imgWidth * 2
 			canvas.height = this.imgHeight
 			this.overlay.style.width = getComputedStyle(canvas).width
-
 			this.dx = []
 			for (let i = 0; i < 4; i++) {
 				this.dx.push(this.imgWidth * i)
@@ -21,7 +20,6 @@ class Background {
 			setTimeout(() => {
 				gameLoadingStates.push('Loading Background....')
 			}, 1000)
-			
 		}
 	}
 
@@ -50,26 +48,24 @@ class Background {
 class Ground {
 	constructor() {
 		this.img = new Image()
-		this.img.src = '../images/ground.png'
+		this.img.src = '../images/ground.webp'
+		this.imgWidth = 1474 //this.img.naturalWidth
+		this.imgHeight = 128 //this.img.naturalHeight
 
 		// Wait until the image is loaded
 		this.img.onload = () => {
-			this.imgWidth = this.img.naturalWidth
-			this.imgHeight = this.img.naturalHeight
-
 			this.dx = []
 			this.dy = canvas.height - this.imgHeight
 			setTimeout(() => {
 				this.dy = canvas.height - this.imgHeight
 			}, 1000)
-			
+
 			for (let i = 0; i < 2; i++) {
 				this.dx.push(this.imgWidth * i)
 			}
 			setTimeout(() => {
 				gameLoadingStates.push('Loading Ground....')
 			}, 2000)
-			
 		}
 	}
 
@@ -105,16 +101,16 @@ class Ground {
 class Pipes {
 	constructor() {
 		this.imgUpward = new Image()
-		this.imgUpward.src = '../images/upward-Pipe.png'
+		this.imgUpward.src = '../images/upward-Pipe.webp'
 
 		this.imgDownward = new Image()
-		this.imgDownward.src = '../images/downward-Pipe.png'
+		this.imgDownward.src = '../images/downward-Pipe.webp'
+
+		this.imgWidth = 138//this.imgUpward.naturalWidth
+		this.imgHeight = 793//this.imgUpward.naturalHeight
 
 		// Wait until the image is loaded
 		this.imgUpward.onload = () => {
-			this.imgWidth = this.imgUpward.naturalWidth
-			this.imgHeight = this.imgUpward.naturalHeight
-
 			this.properties = []
 			for (let i = 0; i < 4; i++) {
 				this.properties.push({
@@ -168,10 +164,7 @@ class Pipes {
 				this.properties[i].randomNumber = Math.floor(Math.random() * 401) - 186
 				this.scoringSystem.newScore()
 			}
-
 		}
-
-		
 	}
 
 	collisionDetection(dx, dy, objectWidth, objectHeight) {
@@ -206,13 +199,13 @@ class Pipes {
 class Bird {
 	constructor() {
 		this.img1 = new Image()
-		this.img1.src = '../images/bird1.png'
+		this.img1.src = '../images/bird1.webp'
 
 		this.img2 = new Image()
-		this.img2.src = '../images/bird2.png'
+		this.img2.src = '../images/bird2.webp'
 
 		this.img3 = new Image()
-		this.img3.src = '../images/bird3.png'
+		this.img3.src = '../images/bird3.webp'
 
 		// Wait until the image is loaded
 		this.img1.onload = () => {

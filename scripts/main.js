@@ -1,6 +1,11 @@
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
+ctx.shadowColor = 'transparent'
+ctx.shadowBlur = 0
+ctx.shadowOffsetX = 0
+ctx.shadowOffsetY = 0
+
 let gameLoadingStates = []
 
 let background = new Background()
@@ -178,15 +183,14 @@ const mod = document.querySelector('.m-mod')
 function screenModFun() {
 	if (
 		document.documentElement.requestFullscreen &&
-		mod.src.split('/')[4] == 'fullscreen.png'
+		mod.src.split('/')[4] == 'fullscreen.webp'
 	) {
 		document.documentElement.requestFullscreen()
-		mod.src = '../images/fullscreen-exit.png'
+		mod.src = '../images/fullscreen-exit.webp'
 	} else if (document.exitFullscreen) {
 		document.exitFullscreen()
-		mod.src = '../images/fullscreen.png'
+		mod.src = '../images/fullscreen.webp'
 	}
-	
 }
 
 window.addEventListener('resize', () => {

@@ -23,7 +23,7 @@ body {
 }
 
 #canvas {
-	background-image: url('../images/backdrop.png');
+	background-image: url('../images/backdrop.webp');
 	background-repeat: no-repeat;
 	background-size: cover;
 	height: 100vh;
