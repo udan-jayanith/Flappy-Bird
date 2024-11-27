@@ -5,6 +5,7 @@ class Settings {
 		this.IntervalTimeout = 1000 / this.FPS
 		this.gameSpeed = 0.2
 		this.IntervalGameSpeed = this.gameSpeed * this.IntervalTimeout
+		gameLoadingStates.push('Loading Settings....')
 	}
 
 	getFPS() {
@@ -28,6 +29,7 @@ class CurrentGameFPS {
 		this.fps = 0
 
 		this.fpsEl = document.querySelector('.current-fps')
+		gameLoadingStates.push('Loading Settings....')
 	}
 
 	calculateFPS() {
@@ -55,6 +57,17 @@ class ScoringSystem {
 		})
 
 		this.scoreEl = document.querySelectorAll('.score')
+
+		if ('connection' in navigator) {
+			const connection =
+				navigator.connection ||
+				navigator.mozConnection ||
+				navigator.webkitConnection
+
+			setTimeout(() => {
+				gameLoadingStates.push('Loading Settings....')
+			}, 100 - connection.downlink * 10)
+		}
 	}
 
 	newScore() {
@@ -70,5 +83,12 @@ class ScoringSystem {
 		}
 
 		playAudio('../sounds/point.ogg')
+	}
+
+	reset() {
+		this.currentScore = 0
+		this.scoreEl.forEach((el) => {
+			el.innerText = this.currentScore
+		})
 	}
 }

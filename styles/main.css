@@ -177,13 +177,19 @@ button:hover {
 }
 
 .loading-screen {
-	background-color: red;
+	background-color: black;
 	position: absolute;
 	z-index: 20;
+	width: 100%;
 	height: 100vh;
 	img {
+		width: 100%;
 		height: 100vh;
+		object-fit: contain;
+		outline: none;
 	}
+
+	display: none;
 }
 
 .loading-bar {
@@ -191,7 +197,7 @@ button:hover {
 	position: absolute;
 	z-index: 21;
 	bottom: 0;
-	background-color: rgba(0, 0, 255, 0);
+	background-color: rgba(1, 1, 125, 0);
 }
 
 .loading-bar[value]::-webkit-progress-bar {
@@ -209,5 +215,5 @@ button:hover {
 }
 
 .loading-bar[value]::-webkit-progress-value {
-	background-color: #e86101;
+	background: linear-gradient(90deg, #ff9100, #e86101);
 }

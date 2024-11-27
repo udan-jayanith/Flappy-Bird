@@ -14,8 +14,12 @@ let currentGameFPS = new CurrentGameFPS()
 let isGameOver = false
 let intervalId = undefined
 const overlay = document.querySelector('.overlay')
+const loadingScreen = document.querySelector('.loading-screen')
+loadingScreen.style.display = 'block'
 
 onkeyup = (event) => {
+	if (event.code == 'KeyF') screenModFun()
+	if (loadingScreen.style.display == 'block') return
 	if (
 		!isGameOver &&
 		(event.code == 'Space' || event.code == 'KeyW' || event.code == 'ArrowUp')
@@ -26,19 +30,29 @@ onkeyup = (event) => {
 }
 
 overlay.addEventListener('click', (e) => {
-	if (e.target.classList.contains('x')) return
+	if (
+		e.target.classList.contains('x') ||
+		loadingScreen.style.display == 'block'
+	) {
+		return
+	}
+
 	if (
 		!intervalId &&
 		e.target.classList.contains('notice-centering-div') &&
 		!isGameOver
 	) {
 		startSetInterval()
-	}else if (e.target.classList.contains('notice-centering-div')) bird.jump()
+	} else if (e.target.classList.contains('notice-centering-div')) bird.jump()
 })
 
 const notice = document.querySelector('.notice')
+const progressBar = document.querySelector('.loading-bar')
 
 function draw() {
+	if (loadingScreen.style.display == 'block') {
+		loadingScreen.style.display = 'none'
+	}
 	ctx.clearRect(-canvas.width, 0, canvas.width * 3, canvas.height)
 
 	background.draw(settings.getGameSpeed())
@@ -61,7 +75,12 @@ function draw() {
 	bird.runGravity()
 	bird.draw(bird.updateBirdActions())
 	ground.draw(settings.getGameSpeed())
-	if (ground.collisionDetection(bird.getDy(), bird.getBirdHeight())) gameOver()
+	if (
+		ground.collisionDetection(bird.getDy(), bird.getBirdHeight()) &&
+		bird.isGameStarted
+	) {
+		gameOver()
+	}
 
 	currentGameFPS.calculateFPS()
 }
@@ -75,8 +94,11 @@ const pauseButton = document.querySelector('.pause-button')
 function startSetInterval() {
 	pauseButton.style.display = 'block'
 	intervalId = setInterval(() => {
-		if (gameLoadingStates.length >= 2) draw()
-		else console.log(gameLoadingStates)
+		if (progressBar.value >= 100) draw()
+		else {
+			loadingScreen.style.width = getComputedStyle(canvas).width
+			progressBar.value = gameLoadingStates.length * 10
+		}
 	}, settings.getIntervalTimeout())
 }
 startSetInterval()
@@ -106,12 +128,11 @@ function gameOver() {
 
 gameOverDialog.addEventListener('keydown', (e) => {
 	e.preventDefault()
-	if (e.code == 'Enter') r()
+	if (e.code == 'Enter') playAgain()
 })
 
 document.querySelector('.reset-game-button').addEventListener('click', () => {
-	location.reload()
-	//r()
+	playAgain()
 })
 
 pauseButton.addEventListener('click', () => {
@@ -124,29 +145,51 @@ function playAudio(audioFilePath) {
 	audio
 		.play()
 		.catch((error) =>
-			alert(
+			console.log(
 				'No audio permission granted. Allow audio permission for better experience.'
 			)
 		)
 }
 
-/*
-function r() {
+function playAgain() {
 	gameOverDialog.style.display = 'none'
 	gameOverDialog.close()
-	gameLoadingStates = []
 
-	background = new Background()
-	ground = new Ground()
-	pipes = new Pipes()
-	bird = new Bird()
-
-	settings = new Settings()
-	currentGameFPS = new CurrentGameFPS()
+	stopSetInterval()
+	pipes.reset()
+	bird.reset()
 
 	isGameOver = false
 	intervalId = undefined
-	stopSetInterval()
-	console.log('d')
+
+	notice.style.display = 'block'
+	notice.innerText = 'Press "Space" to play again.'
+	startSetInterval()
 }
-*/
+
+const screenMod = document.querySelector('.screen-mod')
+screenMod.addEventListener('click', () => {
+	// Call the function to go full screen
+	screenModFun()
+})
+
+const mod = document.querySelector('.m-mod')
+
+function screenModFun() {
+	if (
+		document.documentElement.requestFullscreen &&
+		mod.src.split('/')[4] == 'fullscreen.png'
+	) {
+		document.documentElement.requestFullscreen()
+		mod.src = '../images/fullscreen-exit.png'
+	} else if (document.exitFullscreen) {
+		document.exitFullscreen()
+		mod.src = '../images/fullscreen.png'
+	}
+}
+
+window.addEventListener('resize', () => {
+	setTimeout(() => {
+		overlay.style.width = getComputedStyle(canvas).width
+	}, 1000)
+})

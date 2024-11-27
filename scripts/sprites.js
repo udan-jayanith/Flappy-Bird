@@ -120,7 +120,7 @@ class Pipes {
 			gameLoadingStates.push('Loading Pipes....')
 		}
 
-		this.a = canvas.height + 400 //380
+		this.a = canvas.height + 380
 		this.scoringSystem = new ScoringSystem()
 	}
 
@@ -158,7 +158,10 @@ class Pipes {
 				this.properties[i].randomNumber = Math.floor(Math.random() * 401) - 186
 				this.scoringSystem.newScore()
 			}
+
 		}
+
+		
 	}
 
 	collisionDetection(dx, dy, objectWidth, objectHeight) {
@@ -172,8 +175,19 @@ class Pipes {
 				playAudio('../sounds/die.ogg')
 				return true
 			}
-				
 		}
+	}
+
+	reset() {
+		this.properties = []
+		for (let i = 0; i < 4; i++) {
+			this.properties.push({
+				dx: canvas.width + (this.imgWidth + canvas.width / 4) * i,
+				randomNumber: Math.floor(Math.random() * 401) - 186,
+			})
+		}
+
+		this.scoringSystem.reset()
 	}
 }
 // #endregion
@@ -196,15 +210,15 @@ class Bird {
 			this.imgHeight = this.img1.naturalHeight
 			this.dx = this.imgWidth * 4
 
-			gameLoadingStates.push('Loading Ground....')
+			gameLoadingStates.push('Loading Pipes....')
 		}
 
 		this.img2.onload = () => {
-			gameLoadingStates.push('Loading Ground....')
+			gameLoadingStates.push('Loading Pipes....')
 		}
 
 		this.img3.onload = () => {
-			gameLoadingStates.push('Loading Ground....')
+			gameLoadingStates.push('Loading Pipes....')
 		}
 
 		this.frame = 0
@@ -297,6 +311,21 @@ class Bird {
 
 	getBirdWidth() {
 		return this.imgWidth
+	}
+
+	reset() {
+		this.dx = this.imgWidth * 4
+
+		this.frame = 0
+		this.birdSpeed = 2
+		this.skyLevel = null
+		this.eventTrigger = 0
+		this.birdGravity = 9.2
+		this.isGameStarted = false
+		this.freeMove = 20
+		this.freeMoveAction = true
+
+		this.dy = 0
 	}
 }
 // #endregion
