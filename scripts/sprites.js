@@ -59,6 +59,10 @@ class Ground {
 
 			this.dx = []
 			this.dy = canvas.height - this.imgHeight
+			setTimeout(() => {
+				this.dy = canvas.height - this.imgHeight
+			}, 1000)
+			
 			for (let i = 0; i < 2; i++) {
 				this.dx.push(this.imgWidth * i)
 			}
