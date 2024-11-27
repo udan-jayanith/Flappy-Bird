@@ -62,7 +62,10 @@ class Ground {
 			for (let i = 0; i < 2; i++) {
 				this.dx.push(this.imgWidth * i)
 			}
-			gameLoadingStates.push('Loading Ground....')
+			setTimeout(() => {
+				gameLoadingStates.push('Loading Ground....')
+			}, 2000)
+			
 		}
 	}
 
